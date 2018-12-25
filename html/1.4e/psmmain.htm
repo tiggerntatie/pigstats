@@ -1,0 +1,61 @@
+<html>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#000000">
+<font color="#FFCC33" size="2" face="Trebuchet MS,sans-serif">
+<div align="center">
+
+<!-- Bring in data for all the games -->
+<script language="JavaScript" SRC="psgame.js"></script>
+
+
+<script language = "JavaScript">//<!--
+// initialize some globals at the parent.parent level
+parent.parent.pg = g
+parent.parent.pgp = gp
+parent.parent.pgq = gq
+parent.parent.pmwq = mwq
+parent.parent.pmw = mw
+//-->
+</script>
+
+
+<table border="0" width="750">
+		<script language = "JavaScript">//<!--
+		/* execute following upon page load */
+		if (parent.parent.displaystate=="map")
+		{
+			parent.parent.showMapStats()
+		}
+		else /* totals */
+		{
+			parent.parent.showMatchTotalsStats()
+		}
+
+		//-->
+		</script>
+</table>
+</div>
+
+</body>
+</html>

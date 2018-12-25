@@ -1,0 +1,90 @@
+<html>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<body bgcolor="#000000" link="#FFCC33" vlink="#FFCC33" alink="#FFCC33">
+
+<script language = "JavaScript">//<!--
+/* execute following upon page load */
+// precache
+
+function playermode(newmode)
+{
+	parent.displaystate = newmode
+}
+
+ function alertmetadata()
+{
+	alert('PigStats '+parent.metapsv+' log file processing statistics\n'+
+			'\nlog files processed: '+parent.metafp+
+			'\nlog file bytes processed: '+parent.metabp+
+			'\nplayers processed: '+parent.metatpp+
+			'\nprocessing time: '+parent.metapds+' seconds'+
+			'\nlast processed on: '+parent.metaptd+
+			'\noperating system: '+parent.metaos+
+			'\nPigStats arguments: '+parent.metapsa)
+}
+//-->
+</script>
+
+
+
+<div align="center">
+<table border="0" width="750">
+<tr>
+<td width="28%">
+<font color='#FFCC33' size='3' face='Trebuchet MS,sans-serif'><strong>
+ <a href="http://www.planethalflife.com/pigstats" target="_top" nounderline>
+ PigStats</a>
+ </strong></font><br>
+<font color='#FFCC33' size='2' face='Trebuchet MS,sans-serif'><strong>Half-Life 
+ statistics v<script language="JavaScript">document.writeln(parent.metapsv)</script>
+ </strong></font>
+<a href='javascript:alertmetadata()' onmouseover=
+    "window.status='display statistics meta data';return true"
+     onMouseOut="window.status='';return true">
+<IMG SRC='./gifs/smallpiglogo.gif' 
+	ALT="click to see information about these statistics"  
+	BORDER="0"  HEIGHT="16"  WIDTH="16" ALIGN="ABSMIDDLE" >
+</a>
+
+<td width="18%" align=center>
+<font color='#FFCC33' size='4' face='Trebuchet MS,sans-serif'><strong>
+ <a href="psmainf.htm" onClick="playermode('player')" target="theMFrame">
+ players</a></strong></font>
+
+<td width="18%" align=center>
+<font color='#FFCC33' size='4' face='Trebuchet MS,sans-serif'><strong>
+ <a href="psmainf.htm" onClick="playermode('weapon')"  target="theMFrame">
+ weapons</a></strong></font>
+
+<td width="18%" align=center>
+<font color='#FFCC33' size='4' face='Trebuchet MS,sans-serif'><strong>
+ <a href="psmainf.htm" onClick="playermode('map')" target="theMFrame">
+ maps</a></strong></font>
+
+<td width="18%" align=center>
+<font color='#FFCC33' size='4' face='Trebuchet MS,sans-serif'><strong>
+ <a href="psmainf.htm" onClick="playermode('totals')" target="theMFrame">
+ match wins</a></strong></font>
+
+</table>
+</div>
+
+</body>
+</html>

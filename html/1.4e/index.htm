@@ -1,0 +1,667 @@
+<html>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>PigStats Half-Life Statistics</title>
+</head>
+
+<script language="JavaScript" SRC="psovera.js"></script>
+
+<script language = "JavaScript">//<!--
+// establish a default weapon name translation table
+var wntt=new Array
+var wnttx
+for (wnttx=0;wnttx<wq;wnttx++) 
+{
+	wntt[w[wnttx][0]]=w[wnttx][0]
+}
+//-->
+</script>
+
+
+<!-- Include a user provided weapon name translation table -->
+<script language="JavaScript" SRC="pswntt.js"></script>
+
+
+<script language = "JavaScript">//<!--
+// maintain state information here
+var sortby = "kills"
+var playerdetail = ""
+var weapondetail = ""
+var gameindex = 0
+
+// initialize to player detail mode
+playerdetail = p[parent.pk[0]][0]
+
+// precache some images
+image1=new Image;image1.src="gifs/deathaward.gif"
+image2=new Image;image1.src="gifs/divider.gif"
+image3=new Image;image1.src="gifs/killaward.gif"
+image4=new Image;image1.src="gifs/killminaward.gif"
+image5=new Image;image1.src="gifs/rateaward.gif"
+image6=new Image;image1.src="gifs/ratioaward.gif"
+image7=new Image;image1.src="gifs/safetyaward.gif"
+image8=new Image;image1.src="gifs/weapon.gif"
+image9=new Image;image1.src="gifs/weapon1.gif"
+image10=new Image;image1.src="gifs/weapon2.gif"
+image11=new Image;image1.src="gifs/weapon3.gif"
+image12=new Image;image1.src="gifs/b1.gif"
+image13=new Image;image1.src="gifs/r1.gif"
+image14=new Image;image1.src="gifs/g1.gif"
+image15=new Image;image1.src="gifs/dr1.gif"
+image16=new Image;image1.src="gifs/dg1.gif"
+image17=new Image;image1.src="gifs/db1.gif"
+image18=new Image;image1.src="gifs/dy1.gif"
+image19=new Image;image1.src="gifs/lb1.gif"
+image20=new Image;image1.src="gifs/p1.gif"
+image21=new Image;image1.src="gifs/y1.gif"
+
+
+// ugly global array of player awards
+var playerawards = findPlayerAwards()
+
+
+// ugly global for display state: player, weapon or map
+var displaystate="player"
+// ugly global carries data obtained from maps
+// these will be initialized prior to use, as needed
+var pg // list of games
+var pgp // list of players in games
+var pgq // game quantity
+var pmwq // match win quantity
+var pmw // match win stats
+
+
+function sortBy(sorttype)
+{
+	sortby = sorttype
+}
+
+function playerDetail(player)
+{
+	var i
+	var found=false
+	// is this player in our summary database?
+	// if not found, nothing changes...
+	for (i=0;i<pq;i++)
+	{
+		if (p[pk[i]][0]==player)
+		{
+			playerdetail = player
+			weapondetail = ""
+			found=true
+			break
+		}
+	}
+	if (found==false)
+	{
+		alert("Summary data for "+player+" are not available!")
+	}
+}
+
+function weaponDetail(weapon)
+{
+	playerdetail = ""
+	weapondetail = weapon
+}
+
+function gameDetail(index)
+{
+	playerdetail = ""
+	weapondetail = ""
+	gameindex = index
+}
+
+
+function showElement(width,entry)
+{
+	return "<td "+(width?("width='"+width+"%'"):"")+"><font color='#CCCCCC' \
+	size='2' face='Trebuchet MS,sans-serif'>"+(entry==-1.0?'N/A':entry)+
+	"</font></td>"
+}
+
+function showPlayerElement(width,entry,isweapon,disptext)
+{
+	var text=entry
+	if (disptext!="")
+	{
+		text=disptext
+	}
+	return "<td "+(width?("width='"+width+"%'"):"")+"><a href='pstitle.htm' \
+	target='detailFrame' onclick=\"parent.parent."+
+	(isweapon?"weaponDetail":"playerDetail")+"('"+entry+"')\">\
+	<font color='#CCCCCC' size='2' face='Trebuchet MS,sans-serif'>"+
+	(text==-1.0?'N/A':text)+"</font></td>"
+}
+
+function showPlayerDetailElement(entry,value,isweapon,disptext)
+{
+	var text=entry
+	var dispvalue = (value==-1.0?"N/A":value)
+	if (disptext!="")
+	{
+		text=disptext
+	}
+	return "<td><font color='#CCCCCC' size='2' face='Trebuchet MS,sans-serif'>"+
+  dispvalue+"</font></td><td><a href='pstitle.htm' target='detailFrame' \
+  onclick=\"parent."+(isweapon?"weaponDetail":"playerDetail")+"('"+entry+
+  "')\"><font color='#CCCCCC' size='2' face='Trebuchet MS,sans-serif'>"+text+
+  "</font></td>"
+}
+
+function showDetailElement(entry)
+{
+	return "<td><font color='#CCCCCC' size='2' face='Trebuchet MS,sans-serif'>"+
+  entry+"</font></td>"
+}
+
+
+function showGameElement(width,entry,indexval)
+{
+	return "<td width='"+width+"%'><a href='pstitle.htm' target='detailFrame' \
+  onclick=\"parent.parent.gameDetail("+indexval+")\"><font color='#CCCCCC' \
+  size='2' face='Trebuchet MS,sans-serif'>"+entry+"</font></td>"
+}
+
+
+function colorFromWeapon(weapon, pixels, debug)
+{
+	var bartext=""
+	var colname=""
+	var weaponx = wi[weapon]
+	var weapondetail=weapon
+	if ((weapon!="*") && (weaponx<9) && (w[weaponx][0]==weapon))
+	{
+		switch (weaponx)
+		{
+			case 0 : colname="r1";break;
+			case 1 : colname="dg1";break;
+			case 2 : colname="dr1";break;
+			case 3 : colname="b1";break;
+			case 4 : colname="g1";break;
+			case 5 : colname="p1";break;
+			case 6 : colname="y1";break;
+			case 7 : colname="dy1";break;
+			case 8 : colname="lb1";break;
+			default : break;
+		}
+	}
+	else
+	{
+		colname="db1"
+	}
+	if (weapon=="*") 
+	{
+		weapondetail="other"
+	}
+	else
+	{
+		weapondetail=wntt[weapondetail]
+	}
+	if (pixels>1)
+	{
+		bartext="<img src='gifs/"+colname+".gif' ALT='"+weapondetail+"' width=\
+  '"+(pixels-1)+"' height='10'>"		
+	}
+	bartext+="<img src='gifs/divider.gif' width='1' height='10'>"
+	return bartext
+}
+
+function colorForPlayer(playerindex)
+{
+	// get the total kills for this guy
+	var bartext=""
+	var k, wk, i, pixels, pixeltotal=0;
+	k = p[playerindex][2]
+	wk = p[playerindex][11] // weapon kills for player
+	if (wk>5) wk=5 // more than 5 always gets ugly
+	for (i=0;i<wk;i++)
+	{
+		pixels = Math.round(100*px[playerindex][3][i][0]/k)
+		pixeltotal+=pixels
+		bartext+=colorFromWeapon(px[playerindex][3][i][1],pixels,i)
+	}
+	if (pixeltotal < 100) bartext+=colorFromWeapon("*",100-pixeltotal)
+	return bartext
+}
+
+function makeAwardText(file,comment)
+{
+	return "<img src='gifs/"+file+".gif' ALT='"+comment+"'> "
+}
+
+function makeAwardDetailText(file,comment)
+{
+	return "<img src='gifs/"+file+".gif'>"+comment
+}
+
+function findPlayerAwards()
+{
+	var pa = new(Array)
+	var i
+	var lowestratename
+	var highestratename
+	var highestrate=0
+	var lowestrate=1000000
+	var ratetemp
+
+	for (i=0;i<pq;i++)
+	{
+		// initialize an award list for each player
+		pa[p[pk[i]][0]]=""
+	}
+	// determine the statistic awards
+	// highest kills
+	if (pkq) pa[p[pk[0]][0]]+=makeAwardText("killaward","highest kills")
+	// highest kill rate
+	if (prtq) pa[p[prt[0]][0]]+=makeAwardText("rateaward","highest kill rate")
+	// highest kill ratio
+	if (prq) pa[p[pr[0]][0]]+=makeAwardText("ratioaward",
+  "highest kill to death ratio")
+	// lowest death rate (compute on the fly)
+	for (i=0;pdq&&(i<pq);i++)
+	{
+		if (p[pd[i]][7])
+		{
+			ratetemp=p[pd[i]][3]/p[pd[i]][7]
+			if (ratetemp>highestrate)
+			{
+				highestratename=p[pd[i]][0]
+				highestrate=ratetemp
+			}
+			if (ratetemp<lowestrate)
+			{
+				lowestratename=p[pd[i]][0]
+				lowestrate=ratetemp
+			}
+		}
+	}
+	if (pdq) pa[lowestratename]+=makeAwardText("safetyaward","lowest death rate")
+	// highest deaths
+	if (pdq) pa[highestratename]+=makeAwardText("deathaward","highest death rate")
+	// lowest ratio
+	if (prq) pa[p[pr[prq-1]][0]]+=makeAwardText("killminaward",
+  "lowest kill to death ratio (yellow puddle of shame)")
+	// weapon awards
+	for (i=0;i<wq && (wi[w[i][0]]==i);i++)
+	{
+		switch (i)
+		{
+			case 0 : pa[wk[i][0][1]]+=makeAwardText("weapon1",
+    "best with most popular weapon: "+wntt[w[i][0]]);break;
+			case 1 : pa[wk[i][0][1]]+=makeAwardText("weapon2",
+    "best with second most popular weapon: "+wntt[w[i][0]]);break;
+			case 2 : pa[wk[i][0][1]]+=makeAwardText("weapon3",
+    "best with third most popular weapon: "+wntt[w[i][0]]);break;
+			default : pa[wk[i][0][1]]+=makeAwardText("weapon",
+    "best with weapon: "+wntt[w[i][0]]);break;
+		}
+	}
+	return pa
+}
+
+function showPlayerStats()
+{
+	var pagedata=""		
+	var i,q,parray
+
+
+	with (theMFrame.theFrame.document)
+	{
+		switch( sortby ) 
+		{
+		   case "kills" : q=pkq;parray=pk; break;
+		   case "ratio" : q=prq;parray=pr; break;
+		   case "rate" : q=prtq;parray=prt; break;
+		   case "deaths" : q=pdq;parray=pd; break;
+		   case "suicides" : q=psq;parray=ps; break;
+		   default  : q=pkq;parray=pk; break;
+		}
+
+		// initialize the output again
+		pagedata = ""
+
+		for (i=0;i<q;i++)
+		{
+			pagedata+="<tr>"
+			pagedata+=showPlayerElement(18,p[parray[i]][0],false,"")
+			pagedata+=showElement(9,p[parray[i]][2])
+			pagedata+=showElement(9,p[parray[i]][5])
+			pagedata+=showElement(9,p[parray[i]][6])
+			pagedata+=showElement(9,p[parray[i]][3])
+			pagedata+=showElement(9,p[parray[i]][4])
+			pagedata+=showElement(9,p[parray[i]][7])
+			pagedata+="<td width='16%'>"+colorForPlayer(parray[i])+"</td>"
+			pagedata+="<td width='12%'>"+playerawards[p[parray[i]][0]]+"</td>"
+			pagedata+="</tr>"
+		}
+		// write the file
+		writeln(pagedata)
+	}
+}
+
+function showWeaponStats()
+{
+	var pagedata=""		
+	var i,q,parray
+
+
+	with (theMFrame.theFrame.document)
+	{
+		// initialize the output again
+		pagedata = ""
+
+		for (i=0;i<wq;i++)
+		{
+			// table elements 10, 30, 10, 50
+			pagedata+="<tr>"
+			pagedata+=showElement(10,w[i][1])
+			pagedata+=showPlayerElement(30,w[i][0],true,wntt[w[i][0]])
+			pagedata+=showElement(10,wk[i][0][0])
+			pagedata+=showPlayerElement(50,wk[i][0][1],false,"")
+			pagedata+="</tr>"
+		}
+		// write the file
+		writeln(pagedata)
+	}
+}
+
+function showMapStats()
+{
+	var pagedata=""		
+	var i
+	var datetime = new Date
+
+
+	with (theMFrame.theFrame.document)
+	{
+		// initialize the output again
+		pagedata = ""
+
+		for (i=0;i<pgq;i++)
+		{
+			pagedata+="<tr>"
+			pagedata+=showGameElement(20,pg[i][0],i)
+			datetime.setTime(1000.0*pg[i][1])
+			pagedata+=showGameElement(80,datetime.toLocaleString(),i)
+			pagedata+="</tr>"
+		}
+		// write the file
+		writeln(pagedata)
+	}
+}
+
+function showMatchTotalsStats()
+{
+	var pagedata=""		
+	var i
+	
+	with (theMFrame.theFrame.document)
+	{
+		// initialize the output again
+		pagedata = ""
+
+		for (i=0;i<pmwq;i++)
+		{
+			pagedata+="<tr>"
+			pagedata+=showPlayerElement(25,pmw[i][0],false,"")
+			pagedata+=showElement(75,pmw[i][1])
+			pagedata+="</tr>"
+		}
+		// write the file
+		writeln(pagedata)
+	}
+}
+
+
+
+// display a detail chart for a particular player in the top frame
+function showPlayerDetail()
+{
+	var preamble1= "<table border='0' width='750'>\
+		<tr>\
+			<td colspan='8' width='100%'><font color='#FFCC33'\
+			size='4' face='Trebuchet MS,sans-serif'><em>Player detail for: "+
+    playerdetail+"</em></font>\
+			</td>\
+		</tr>\
+		<tr>\
+        <td width='10%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Total Kills</em></font></td>\
+        <td width='10%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Kill/Death</em></font></td>\
+        <td width='10%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>KillRate</em></font></td>\
+        <td width='10%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Total Deaths</em></font></td>\
+        <td width='10%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Suicides</em></font></td>\
+        <td width='10%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Minutes</em></font></td>\
+        <td width='20%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Weapons</em></font></td>\
+        <td width='20%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Awards</em></font></td>\
+    </tr>"
+
+	var preamble2="<tr><td colspan='8' width='100%'><img src='gifs/b1.gif' \
+    width='750' height='2'></td></tr></table>\
+				<table border='0' width='750'><tr>\
+				<td width='5%'><font color='#FFCC33' size='2'\
+				face='Trebuchet MS,sans-serif'><em>Kills</em></font></td>\
+				<td width='15%'><font color='#FFCC33' size='2'\
+				face='Trebuchet MS,sans-serif'><em>against</em></font></td>\
+				<td width='5%'><font color='#FFCC33' size='2'\
+				face='Trebuchet MS,sans-serif'><em>Killed</em></font></td>\
+				<td width='15%'><font color='#FFCC33' size='2'\
+				face='Trebuchet MS,sans-serif'><em>by</em></font></td>\
+				<td width='5%'><font color='#FFCC33' size='2'\
+				face='Trebuchet MS,sans-serif'><em>Ratio</em></font></td>\
+				<td width='15%'><font color='#FFCC33' size='2'\
+				face='Trebuchet MS,sans-serif'><em>against</em></font></td>\
+				<td width='5%'><font color='#FFCC33' size='2'\
+				face='Trebuchet MS,sans-serif'><em>Kills</em></font></td>\
+				<td width='15%'><font color='#FFCC33' size='2'\
+				face='Trebuchet MS,sans-serif'><em>with weapon</em></font></td>\
+				<td width='5%'><font color='#FFCC33' size='2'\
+				face='Trebuchet MS,sans-serif'><em>Killed</em></font></td>\
+				<td width='15%'><font color='#FFCC33' size='2'\
+				face='Trebuchet MS,sans-serif'><em>by weapon</em></font></td>\
+			</tr>"
+	var postamble = "</table><br>"
+
+	if (playerdetail != "")
+	{
+		// generate a player detail table
+		var pindex = pi[playerdetail]
+		var lcount
+		var llimit
+		var killcount = p[pindex][8]
+		var killedbycount = p[pindex][9]
+		var ratiocount = p[pindex][10]
+		var killwcount = p[pindex][11]
+		var killedbywcount = p[pindex][12]
+
+	
+		// create summary stats
+		preamble1+="<tr>"
+		preamble1+=showElement(0,p[pindex][2])
+		preamble1+=showElement(0,p[pindex][5])
+		preamble1+=showElement(0,p[pindex][6])
+		preamble1+=showElement(0,p[pindex][3])
+		preamble1+=showElement(0,p[pindex][4])
+		preamble1+=showElement(0,p[pindex][7])
+		preamble1+="<td>"+colorForPlayer(pindex)+"</td>"
+		preamble1+="<td>"+playerawards[p[pindex][0]]+"</td>"
+		preamble1+="</tr>"
+
+		preamble1 += preamble2 // FIX
+		llimit = Math.max(Math.max(Math.max(killcount,killedbycount),
+   Math.max(ratiocount,killwcount)),killedbywcount)
+		for (lcount=0;lcount<llimit;lcount++)
+		{
+			preamble1 += "<tr>"
+			preamble1 += lcount<killcount?showPlayerDetailElement(
+    px[pindex][0][lcount][1],px[pindex][0][lcount][0],false,""):
+    "<td></td><td></td>"
+			preamble1 += lcount<killedbycount?showPlayerDetailElement(
+    px[pindex][1][lcount][1],px[pindex][1][lcount][0],false,""):
+    "<td></td><td></td>"
+			preamble1 += lcount<ratiocount?showPlayerDetailElement(
+    px[pindex][2][lcount][1],px[pindex][2][lcount][0],false,""):
+    "<td></td><td></td>"
+			preamble1 += lcount<killwcount?showPlayerDetailElement(
+    px[pindex][3][lcount][1],px[pindex][3][lcount][0],true,
+    wntt[px[pindex][3][lcount][1]]):"<td></td><td></td>"
+			preamble1 += lcount<killedbywcount?showPlayerDetailElement(
+    px[pindex][4][lcount][1],px[pindex][4][lcount][0],true,
+    wntt[px[pindex][4][lcount][1]]):"<td></td><td></td>"
+			preamble1 +="</tr>"
+		}
+		preamble1+=postamble
+		return preamble1
+	}
+	else
+	{
+		return ""
+	}
+}
+
+// display a detail chart for a particular weapon in the top frame
+function showWeaponDetail()
+{
+	var preamble1= "<table border='0' width='750'>\
+		<tr>\
+			<td width='100%'><font color='#FFCC33'\
+			size='4' face='Trebuchet MS,sans-serif'><em>Weapon detail for: "+
+    wntt[weapondetail]+"</em></font>\
+			</td>\
+		</tr><tr><td><font color='#FFCC33' size='2' face='Trebuchet MS,sans-serif'>"
+
+
+	var preamble2="<table border='0' width='750'><tr>\
+        <td width='10%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Kills</em></font></td>\
+        <td width='90%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>By Player</em></font></td></tr>"
+
+
+	var postamble = "</table><br>"
+
+	
+	if (weapondetail != "")
+	{
+		// generate a player detail table
+		var windex = wi[weapondetail]
+		var lcount
+		var llimit = w[windex][2]
+		var pname
+	
+		// create summary stats
+		preamble1+="Total Kills: </font><font color='#CCCCCC' size='2' \
+   face='Trebuchet MS,sans-serif'>"+w[windex][1]+"</font></td></tr></table>"
+		preamble1 += preamble2 
+
+		for (lcount=0;lcount<llimit;lcount++)
+		{
+			pname = wk[windex][lcount][1]
+			preamble1 += "<tr><td><font color='#CCCCCC' size='2' \
+    face='Trebuchet MS,sans-serif'>"+wk[windex][lcount][0]+"</font></td>"
+			preamble1 += "<td><a href='pstitle.htm' target='detailFrame' \
+    onclick=\"parent.playerDetail('"+pname+"')\"><font color='#CCCCCC' \
+    size='2' face='Trebuchet MS,sans-serif'>"+pname+"</font></a></td></tr>"
+		}
+		preamble1+=postamble
+		return preamble1
+	}
+	else
+	{
+		return ""
+	}
+}
+
+
+// display a detail chart for a particular game in the top frame
+function showMapDetail()
+{
+	var datetime = new Date
+	var preamble1= "<table border='0' width='750'>\
+		<tr><td width='100%'><font color='#FFCC33'\
+		size='4' face='Trebuchet MS,sans-serif'><em>Game detail for: "
+
+
+	var preamble2="</em></font></td></tr></table>\
+		<table border='0' width='750'><tr>\
+        <td width='30%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Player</em></font></td>\
+        <td width='15%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Kills</em></font></td>\
+        <td width='55%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Deaths</em></font></td>\
+		</tr>"
+
+	with (theMFrame.theFrame)
+	{
+		var postamble = "</table><br>"
+		// generate a game detail table
+		var lcount
+		var llimit = g[gameindex][2]
+		var pname
+
+		datetime.setTime(1000.0*g[gameindex][1])
+
+		// create summary stats
+		preamble1+=g[gameindex][0]+", played on "+datetime.toLocaleString()
+		preamble1+= preamble2 
+
+		for (lcount=0;lcount<llimit;lcount++)
+		{
+			pname = gp[gameindex][lcount][0]
+			preamble1 += "<tr><td><a href='pstitle.htm' target='detailFrame' \
+    onclick=\"parent.playerDetail('"+pname+"')\"><font color='#CCCCCC' \
+    size='2' face='Trebuchet MS,sans-serif'>"+pname+"</font></a></td>"
+			preamble1 += "<td><font color='#CCCCCC' size='2' \
+    face='Trebuchet MS,sans-serif'>"+gp[gameindex][lcount][1]+"</font></td>"
+			preamble1 += "<td><font color='#CCCCCC' size='2' \
+    face='Trebuchet MS,sans-serif'>"+gp[gameindex][lcount][2]+
+    "</font></td></tr>"
+		}
+	}
+	preamble1+=postamble
+	return preamble1
+}
+
+
+
+
+//-->
+</script>
+
+
+
+
+<FRAMESET ROWS="33%,*,60"  BORDER=0 >
+	<FRAME NAME="detailFrame"  SRC="pstitle.htm" MARGINHEIGHT=0 >
+	<FRAME  NAME="theMFrame" SRC="psmainf.htm"  MARGINHEIGHT=0 >
+	<FRAME BORDER=0 NORESIZE NAME="footerFrame" SRC="psfoot.htm"  
+  MARGINHEIGHT=0>
+</FRAMESET>
+
+</html>

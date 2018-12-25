@@ -1,0 +1,164 @@
+<html>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<head>
+<LINK REL=StyleSheet HREF="style.css" TYPE="text/css" MEDIA=screen>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<script type="text/javascript" language="JavaScript">//<!--
+parent.initPig()
+if (typeof parent.gplayer == "undefined")
+{
+  parent.gplayer = parent.pk[0]
+}
+//--></script>
+<p class=detailtitle align='center'>Player detail for 
+  <script type="text/javascript" language="JavaScript">//<!--
+    document.writeln("<a class=sort href='summary.htm#"+parent.p[parent.gplayer][0]+"' target='summaryFrame' title='return to summary view'>")
+    document.writeln(parent.p[parent.gplayer][0])
+  //--></script>
+  </a>
+</p>
+<p class=detailtitle align='center'>
+  <script type="text/javascript" language="JavaScript">//<!--
+    document.writeln(parent.playerawards[parent.p[parent.gplayer][0]])
+  //--></script>
+</p>
+<center><table>
+<tr>
+<td>
+<!-- detail for kills against other players -->
+<center>
+<table class=detail>
+  <tr>
+    <th class=name>
+    <script type="text/javascript" language="JavaScript">//<!--
+    document.writeln(parent.p[parent.gplayer][0])
+    //--></script>
+    killed</th>
+    <th class=kills width=50>times</th>
+  <script type="text/javascript" language="JavaScript">//<!--  kills against rows
+  for(i=0;i<parent.p[parent.gplayer][8];i++)
+  {
+    isok=parent.playervalidated(parent.pi[parent.px[parent.gplayer][0][i][1]])
+    if (!(parent.pscfigignoreunranked && !isok))
+    {
+      document.writeln("<tr><td class=data>"+(isok?"<a class=sort href='detail.htm' target='summaryFrame' onclick='parent.gplayer="+parent.pi[parent.px[parent.gplayer][0][i][1]]+"' title='view detail for "+parent.px[parent.gplayer][0][i][1]+"'>":"")+parent.px[parent.gplayer][0][i][1]+"</td><td class=data>"+parent.px[parent.gplayer][0][i][0])+"</td>"
+    }
+  }
+  //--></script>
+</table></center>
+<br>
+<td>
+<!-- detail for killed by other players -->
+<center>
+<table class=detail>
+  <tr>
+    <th class=name>
+    <script type="text/javascript" language="JavaScript">//<!--
+    document.writeln(parent.p[parent.gplayer][0])
+    //--></script>
+    was victim of</th>
+    <th class=deaths>times</th>
+  <script type="text/javascript" language="JavaScript">//<!--  kills against rows
+  for(i=0;i<parent.p[parent.gplayer][9];i++)
+  {
+    isok=parent.playervalidated(parent.pi[parent.px[parent.gplayer][1][i][1]])
+    if (!(parent.pscfigignoreunranked && !isok))
+    {
+      document.writeln("<tr><td class=data>"+(isok?"<a class=sort href='detail.htm' target='summaryFrame' onclick='parent.gplayer="+parent.pi[parent.px[parent.gplayer][1][i][1]]+"' title='view detail for "+parent.px[parent.gplayer][1][i][1]+"'>":"")+parent.px[parent.gplayer][1][i][1]+"</td><td class=data>"+parent.px[parent.gplayer][1][i][0])+"</td>"
+    }
+  }
+  //--></script>
+</table></center>
+<br>
+<td>
+<!-- detail for killed ratio against other players -->
+<center>
+<table class=detail>
+  <tr>
+    <th class=name>
+    <script type="text/javascript" language="JavaScript">//<!--
+    document.writeln(parent.p[parent.gplayer][0]+"'s")
+    //--></script>
+    kill/death ratio against</th>
+    <th class=ratio>ratio</th>
+  <script type="text/javascript" language="JavaScript">//<!--  kills against rows
+  for(i=0;i<parent.p[parent.gplayer][10];i++)
+  {
+    isok=parent.playervalidated(parent.pi[parent.px[parent.gplayer][2][i][1]])
+    if (!(parent.pscfigignoreunranked && !isok))
+    {
+    	ratioText = parent.px[parent.gplayer][2][i][0]
+    	if (ratioText==-1) ratioText="<em>flawless!</em>"
+      document.writeln("<tr><td class=data>"+(isok?"<a class=sort href='detail.htm' target='summaryFrame' onclick='parent.gplayer="+parent.pi[parent.px[parent.gplayer][2][i][1]]+"' title='view detail for "+parent.px[parent.gplayer][2][i][1]+"'>":"")+parent.px[parent.gplayer][2][i][1]+"</td><td class=data>"+ratioText)+"</td>"
+    }
+  }
+  //--></script>
+</table></center>
+<br>
+</tr>
+</table></center>
+<center><table>
+<tr>
+<td>
+<!-- detail for killed with weapons -->
+<center>
+<table class=detail>
+  <tr>
+    <th class=name>
+    <script type="text/javascript" language="JavaScript">//<!--
+    document.writeln(parent.p[parent.gplayer][0])
+    //--></script>
+    killed using</th>
+    <th class=kills>times</th>
+  <script type="text/javascript" language="JavaScript">//<!--  kills against rows
+  for(i=0;i<parent.p[parent.gplayer][11];i++)
+  {
+    document.writeln("<tr><td class=data><a class=sort href='wdetail.htm' target='summaryFrame' onclick='parent.gweapon="+parent.wi[parent.px[parent.gplayer][3][i][1]]+"' title='view detail for "+parent.wntt[parent.px[parent.gplayer][3][i][1]]+"'>"+parent.wntt[parent.px[parent.gplayer][3][i][1]]+"</td><td class=data>"+parent.px[parent.gplayer][3][i][0])+"</td>"
+  }
+  //--></script>
+</table>
+</center>
+<br>
+<td>
+<!-- detail for killed by weapons -->
+<center>
+<table class=detail>
+  <tr>
+    <th class=name>
+    <script type="text/javascript" language="JavaScript">//<!--
+    document.writeln(parent.p[parent.gplayer][0])
+    //--></script>
+    victim of</th>
+    <th class=kills>times</th>
+  <script type="text/javascript" language="JavaScript">//<!--  kills against rows
+  for(i=0;i<parent.p[parent.gplayer][12];i++)
+  {
+    document.writeln("<tr><td class=data><a class=sort href='wdetail.htm' target='summaryFrame' onclick='parent.gweapon="+parent.wi[parent.px[parent.gplayer][4][i][1]]+"' title='view detail for "+parent.wntt[parent.px[parent.gplayer][4][i][1]]+"'>"+parent.wntt[parent.px[parent.gplayer][4][i][1]]+"</td><td class=data>"+parent.px[parent.gplayer][4][i][0])+"</td>"
+  }
+  //--></script>
+</table></center>
+</tr>
+</table></center>
+
+
+</body>
+</html>

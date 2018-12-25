@@ -1,0 +1,59 @@
+<HTML>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+
+<script language = "JavaScript">//<!--
+// execute following upon page load
+var frametext=""
+if (parent.displaystate=="player")
+{
+	frametext="<FRAMESET ROWS='80,*'  BORDER=0 >"
+}
+else if (parent.displaystate=="weapon")
+{
+	frametext="<FRAMESET ROWS='60,*'  BORDER=0 >"
+}
+else if (parent.displaystate=="map")
+{
+	frametext="<FRAMESET ROWS='30,*'  BORDER=0 >"
+}
+else if (parent.displaystate=="totals")
+{
+	frametext="<FRAMESET ROWS='60,*'  BORDER=0 >"
+}
+frametext+="<FRAME BORDER=0 NORESIZE NAME='headerFrame' SRC='pshead.htm'\
+ MARGINHEIGHT=0 >"
+if ((parent.displaystate=="map")||(parent.displaystate=="totals"))
+{
+	// load the map mainframe, with additional included jscript
+	frametext+="<FRAME  NAME='theFrame' SRC='psmmain.htm' \
+	BORDER=0 MARGINHEIGHT=0 >"
+}
+else
+{
+	// load the normal mainframe
+	frametext+="<FRAME  NAME='theFrame' SRC='psmain.htm' \
+	BORDER=0 MARGINHEIGHT=0 >"
+}
+frametext+="</FRAMESET>"
+document.writeln(frametext)
+//-->
+</script>
+
+</HTML>

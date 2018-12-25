@@ -1,0 +1,68 @@
+<html>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<head>
+<LINK REL=StyleSheet HREF="style.css" TYPE="text/css" MEDIA=screen>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<script type="text/javascript" language="JavaScript">//<!--
+parent.initPig()
+document.writeln("<center><p class=detailtitle>")
+if (parent.gmap<(parent.gq-1))
+{
+  document.writeln("<a class=sort href='mdetail.htm' target='summaryFrame' onclick='parent.gmap="+(parent.gmap+1)+"'>[PREV]</a>")
+}
+if (parent.gmap)
+{
+  document.writeln("<a class=sort href='mdetail.htm' target='summaryFrame' onclick='parent.gmap="+(parent.gmap-1)+"'>[NEXT]</a>")
+}
+document.writeln("</p>")
+//--></script>
+<p class=detailtitle>Detail for
+  <script type="text/javascript" language="JavaScript">//<!--
+    document.writeln(parent.g[parent.gmap][0])
+  //--></script>
+  played on 
+  <script type="text/javascript" language="JavaScript">//<!--
+    var datetime = new Date
+    datetime.setTime(1000.0*parent.g[parent.gmap][1])
+    document.writeln(datetime.toLocaleString())
+  //--></script>
+</p>
+<table>
+  <tr>
+    <th class=name>player name
+    <th class=kills>kills
+    <th class=deaths>deaths
+  <script type="text/javascript" language="JavaScript">//<!--
+    if (parent.aretfcstats) {document.writeln("<th class=caps>caps")}
+    tfc = ""
+    for(i=0;i<parent.g[parent.gmap][2];i++)
+    {
+      if (parent.aretfcstats) {tfc="<td class=data>"+parent.gp[parent.gmap][i][3]}
+      isok = parent.playervalidated(parent.pi[parent.gp[parent.gmap][i][0]])
+      document.writeln("<tr><td class=data>"+(isok?"<a class=sort href='detail.htm' target='summaryFrame' onclick='parent.gplayer="+parent.pi[parent.gp[parent.gmap][i][0]]+"' title='view detail for "+parent.gp[parent.gmap][i][0]+"'>":"")+parent.gp[parent.gmap][i][0]+"</td><td class=data>"+parent.gp[parent.gmap][i][1]+"</td><td class=data>"+parent.gp[parent.gmap][i][2]+tfc)
+    }
+  //--></script>
+</table>
+</center>
+
+</body>
+</html>

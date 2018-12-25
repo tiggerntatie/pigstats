@@ -1,0 +1,31 @@
+# PIGRULES.TXT
+# Player name exclusion/inclusion rules
+#
+# use '#' character to start a comment line
+#
+# XX: exclude this name exactly
+# XA: exclude names containing this text in any location
+# IA: exclude names that do NOT contain this text in any location
+# IX: exclude names that do NOT contain this exact text
+#
+# example 1:
+# XA:[ADSL]
+# XX:Player
+# XX:unnamed
+# this will exclude any player with '[ADSL]' in the name, and players named 
+# 'Player' and 'unnamed'
+# 
+# example 2:
+# IA:[ADSL]
+# IA:[PIGS]
+# this will include all players with '[ADSL]' OR '[PIGS]' in their name
+#
+# example 3:
+# IX:Vector
+# IX:PigBoy
+# this will only include the players named Vector OR PigBoy
+#
+# Note: Rules are evaluated in this order: XA, XX, IA, IX.  If a player is
+# excluded by one rule, then it is not evaluated by the following rules.
+#
+XX:Player

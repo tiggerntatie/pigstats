@@ -1,0 +1,40 @@
+<html>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--><head>
+<LINK REL=StyleSheet HREF="style.css" TYPE="text/css" MEDIA=screen>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<script type="text/javascript" language="JavaScript">//<!--
+parent.initPig()
+//--></script>
+<center><table>
+  <tr>
+    <th class=name>weapon name
+    <th class=kills>kills
+  <script type="text/javascript" language="JavaScript">//<!--
+    for(i=0;i<parent.wq;i++)
+    {
+      document.writeln("<tr><td><a class=sort href='wdetail.htm' target='summaryFrame' onclick='parent.gweapon="+i+"' title='view detail for "+parent.wntt[parent.w[i][0]]+"'>"+parent.wntt[parent.w[i][0]]+"</td><td>"+parent.w[i][1]+"</td>")
+    }
+  //--></script>
+</table>
+</center>
+</body>
+</html>

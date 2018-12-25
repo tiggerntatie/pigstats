@@ -1,0 +1,145 @@
+<html>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<body bgcolor="#000000">
+
+
+<script language = "JavaScript">//<!--
+var playerheader="\
+<div align='center'>\
+<table border='0' width='750'>\
+    <tr>\
+        <td width='100%'><font color='#FFCC33'\
+        size='4' face='Trebuchet MS,sans-serif'><em>\
+		General Statistics</em></font>\
+		<font color='#FFCC33' size='2' \
+		face='Trebuchet MS,sans-serif'><br>Click on\
+        &quot;Kills&quot;, &quot;Kill/Death&quot;,\
+        &quot;KillRate&quot;, &quot;Deaths&quot; or\
+        &quot;Suicides&quot; to re-sort the list on that\
+        quantity.</font>\
+</table>\
+<table border='0' width='750'>\
+ <tr>\
+        <td width='18%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Player</em></font>\
+        <td width='9%'><a href='psmainf.htm' target='theMFrame' \
+		onclick='parent.parent.sortBy(\"kills\")'>\
+		<font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Kills</em></font></a>\
+        <td width='9%'><a href='psmainf.htm' target='theMFrame' \
+		onclick='parent.parent.sortBy(\"ratio\")'>\
+		<font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Kill/Death</em></font></a>\
+        <td width='9%'><a href='psmainf.htm' target='theMFrame' \
+		onclick='parent.parent.sortBy(\"rate\")'>\
+		<font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>KillRate</em></font></a>\
+        <td width='9%'><a href='psmainf.htm' target='theMFrame' \
+		onclick='parent.parent.sortBy(\"deaths\")'>\
+		<font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Deaths</em></font></a>\
+        <td width='9%'><a href='psmainf.htm' target='theMFrame' \
+		onclick='parent.parent.sortBy(\"suicides\")'>\
+		<font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Suicides</em></font></a>\
+        <td width='9%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Minutes</em></font>\
+        <td width='16%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Weapons</em></font>\
+        <td width='12%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Awards</em></font>\
+</table>\
+</div>\
+"
+
+var weaponheader="\
+<div align='center'>\
+<table border='0' width='750'>\
+    <tr>\
+        <td width='100%'><font color='#FFCC33'\
+        size='4' face='Trebuchet MS,sans-serif'><em>Weapon Statistics</em></font>\
+</table>\
+<table border='0' width='750'>\
+    <tr>\
+        <td width='10%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Kills</em></font>\
+        <td width='30%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>\
+		with this weapon, and of those</em></font>\
+        <td width='10%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>this many</em></font>\
+        <td width='50%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>by player:</em></font>\
+</table>\
+</div>\
+"
+
+var mapheader="\
+<div align='center'>\
+<table border='0' width='750'>\
+    <tr>\
+        <td width='100%'><font color='#FFCC33'\
+        size='4' face='Trebuchet MS,sans-serif'><em>Games Played \
+		(most recent first)</em></font>\
+</table>\
+</div>\
+"
+
+var totalsheader="\
+<div align='center'>\
+<table border='0' width='750'>\
+    <tr>\
+        <td width='100%'><font color='#FFCC33'\
+        size='4' face='Trebuchet MS,sans-serif'><em>Match Wins</em></font>\
+</table>\
+<table border='0' width='750'>\
+    <tr>\
+        <td width='25%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>Player</em></font>\
+        <td width='75%'><font color='#FFCC33' size='2'\
+        face='Trebuchet MS,sans-serif'><em>\
+		wins</em></font>\
+</table>\
+</div>\
+"
+
+/* execute following upon page load */
+if (parent.parent.displaystate=="player")
+{
+	document.writeln(playerheader)
+}
+else if (parent.parent.displaystate=="weapon")
+{
+	document.writeln(weaponheader)
+}
+else if (parent.parent.displaystate=="map")
+{
+	document.writeln(mapheader)
+}
+else if (parent.parent.displaystate=="totals")
+{
+	document.writeln(totalsheader)
+}
+//-->
+</script>
+
+
+</body>
+</html>

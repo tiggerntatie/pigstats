@@ -1,0 +1,64 @@
+<html>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<head>
+<LINK REL=StyleSheet HREF="style.css" TYPE="text/css" MEDIA=screen>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<center><table>
+  <tr>
+    <th class=name>name</th>
+  <script type="text/javascript" language="JavaScript">//<!--
+    if (parent.aretfcstats) 
+    {
+    	document.writeln("<th class=score><a class=sort href='summary.htm' target='summaryFrame' onclick='parent.sortByScore()' title='sort by score'>score</a></th>")
+    }
+  //--></script>
+    <th class=kills><a class=sort href='summary.htm' target='summaryFrame' onclick='parent.sortByKills()' title="sort by kills">kills</a></th>
+    <th class=ratio><a class=sort href='summary.htm' target='summaryFrame' onclick='parent.sortByRatio()' title="sort by kill/death ratio">ratio</a></th>
+    <th class=rate><a class=sort href='summary.htm' target='summaryFrame' onclick='parent.sortByRate()' title="sort by kill rate">rate</a></th>
+    <th class=deaths><a class=sort href='summary.htm' target='summaryFrame' onclick='parent.sortByDeaths()' title="sort by deaths">deaths</a></th>
+    <th class=suicides><a class=sort href='summary.htm' target='summaryFrame' onclick='parent.sortBySuicides()' title="sort by suicides">suic.</a></th>
+    <th class=wins><a class=sort href='summary.htm' target='summaryFrame' onclick='parent.sortByWins()' title="sort by match wins">wins</a></th>
+  <script type="text/javascript" language="JavaScript">//<!--
+    if (parent.aretfcstats) 
+    {
+    	document.writeln("<th class=caps><a class=sort href='summary.htm' target='summaryFrame' onclick='parent.sortByCaps()' title='sort by caps'>caps</a></th>")
+    	document.writeln("<th class=skill><a class=sort href='summary.htm' target='summaryFrame' onclick='parent.sortBySkill()' title='sort by skill'>skill</a></th>")
+    }
+  //--></script>
+    <th class=time><a class=sort href='summary.htm' target='summaryFrame' onclick='parent.sortByTime()' title="sort by time">time</a></th>
+    <th class=weapons>weapons</th>
+    <th class=awards>awards</th>
+  <script type="text/javascript" language="JavaScript">//<!--
+    parent.initPig()
+    for(i=0;i<parent.gqty;i++)
+    {
+    	if (parent.playervalidated(parent.gmode[i]))
+  		{
+	      document.writeln(parent.sta[parent.gmode[i]])
+	   }
+    }
+  //--></script>
+</table></center>
+
+</body>
+</html>
+

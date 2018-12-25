@@ -1,0 +1,2 @@
+gcc avl.c pigstats.c pigjs.c pigparse.c pigtext.c pigutil.c -o pigstats -lpthread -ltcl -lz -lm -ldl
+ 

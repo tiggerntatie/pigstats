@@ -1,0 +1,190 @@
+<html>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<head>
+<LINK REL=StyleSheet HREF="style.css" TYPE="text/css" MEDIA=screen>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<a name='top'></a><p class=detailtitle align='center'>PigStats Help File and FAQ</p>
+<center><p>
+<a class=sort href='#summary'>summary</a> | 
+<a class=sort href='#weapons'>weapons</a> | 
+<a class=sort href='#maps'>maps</a> | 
+<a class=sort href='#info'>info</a> | 
+<a class=sort href='#help'>help</a> | 
+<a class=sort href='#awards'>awards</a> | 
+<a class=sort href='#faq'>F.A.Q.</a>
+</center>
+<center><table>
+  <tr>
+    <td class=helpmargin>overview</td>
+    <td class=helpbody>
+There are 4 main categories of statistics, listed across the top of the screen (see them up there now: summary, weapons, maps and info), and 1 scrolling frame where the information is displayed.  When you first enter the stats page, the scrolling frame will list the top players ranked by total kills.  When you click on a new category, the scrolling frame will change to show that category's information.  If you click on a link in the frame, the scrolling frame will be replaced with your chosen information.We will go through each category below to make things more clear.
+</td>
+  </tr>
+  <tr>
+    <td class=helpmargin>summary<a name='summary'></a></td>
+    <td class=helpbody>
+This is the default category.  The lower frame shows the top players listed in order of total kills.  Let's look at each of the columns in the lower frame.
+<ul>
+<li><b>name</b>:  Notice that each name is a link.  This means that clicking on a name will replace the lower frame with detailed statistics for the player. 
+<li><b>kills</b>:  Total number of kills
+<li><b>ratio</b>:  The total kills to total deaths ratio.  If the number shown is greater than 1, the player has more kills than deaths; if lower than 1, more deaths than kills.  If "<em>flawless!</em>", then the player was 
+never killed.
+<li><b>rate</b>:  Number of kills per minute played.
+<li><b>deaths</b>: Total number of times player died
+<li><b>suic.</b>:  Total number of times player killed himself (suicides)
+<li><b>wins</b>:  Total number of games for which this player logged the highest kills.
+<li><b>time</b>:  Total minutes played
+<li><b>weapons</b>:  This colored bar gives a graphical representation of the percentage of kills the player scored with each weapon.  Holding the mouse over each color will show a small box with the weapon name.  Longer colored sections mean more kills with that weapon.  No numbers are shown here, its just a quick overall view of the weapon breakdown.  Detailed info on the breakdown can be found in the player's weapon details, covered below.
+<li><b>awards</b>:  Just for fun, there are various "awards" shown for players who lead in a particular statistic.  The most common are the small red W's, which indicate the most kills with a particular weapon.  Holding the mouse over an award icon will display a box showing what the award is for.  All the awards and their icons are listed in the Awards section below.
+</ul>
+<p class=helpbody>
+<b>Sorting</b>:  Notice that some of these column headings are links.  Clicking on one of these will re-sort the list of players on that statistic, from best at the top to worst at the bottom.  
+<p class=helpbody>
+<b>Player Details</b>:  When you click on a player's name, the frame shows that player's details.   Here one can see how the player stacks up against other players, and how the player's kills and deaths are broken down by weapon type.  The "killed" and "was victim of" tables, combined with the "ratio against" table, are useful in determining who your toughest opponents are.  In the ratio table, numbers greater than 1 mean you killed them more than they killed you.  Numbers less than 1 mean the opposite.  A value of 
+"<em>flawless!</em>" in this table means that no deaths were recorded for that player (i.e. a ratio with a zero divisor can't be displayed).  Again, clicking on any player's name will switch to that player's details. 
+<p class=helpbody>
+The last two tables, "killed using weapon" and "victim of weapon", show the breakdown of the player's total kills and total deaths by weapon type.  Clicking on any underlined weapon will switch the frame to show the details for that weapon (see Weapon Details below). 
+<a class=sort href='#top'>[TOP]</a>
+  </tr>
+  <tr>
+    <td class=helpmargin>weapons<a name='weapons'></a></td>
+    <td class=helpbody>
+Clicking on the weapons category changes the lower frame to show the weapon statistics.  This lists the total kills logged for each weapon type. 
+<p class=helpbody>
+<b>Weapon Details</b>:
+Clicking on a weapon name will display it's details: a breakdown showing how many kills with that weapon by each player individually. 
+<p class=helpbody>
+Note that there is only one "grenade" weapon.  This includes both the hand grenade and the machine gun-launched grenades combined. 
+<a class=sort href='#top'>[TOP]</a></td>
+  </tr>
+  <tr>
+    <td class=helpmargin>maps<a name='maps'></a></td>
+    <td class=helpbody>
+Clicking on maps will bring up a listing of all games played, showing the map name and the date and time of the game.  Clicking on a game will display the results of the game (kills and deaths, just like it's displayed when you press the tab key during a deathmatch game).<a class=sort href='#top'>[TOP]</a>
+</td>
+  </tr>
+  <tr>
+    <td class=helpmargin>info<a name='info'></a></td>
+    <td class=helpbody>
+Info lists "meta data" regarding the statistics themselves.  This includes such things as:
+<ul>
+<li>total log file bytes processed by PigStats
+<li>total log files processed
+<li>total PigStats processing time (seconds) in compiling these stats
+<li>time and date PigStats ran
+<li>total players processed by PigStats
+<li>operating system (used to run PigStats, not necessarily the same as the game server operating system)
+<li>PigStats version number
+<li>Command line arguments used to run PigStats
+</ul>
+<a class=sort href='#top'>[TOP]</a>
+</td>
+  </tr>
+  <tr>
+    <td class=helpmargin>help<a name='help'></a></td>
+    <td class=helpbody>You're looking at it.
+    <a class=sort href='#top'>[TOP]</a>
+    </td>
+  </tr>
+  <tr>
+    <td class=helpmargin>awards<a name='awards'></a></td>
+    <td class=helpbody>
+Awards are given to those players who are leaders (or in some cases losers) in a particular statistic.  Players may have multiple awards for different stats.  Awards are shown in the awards column in the summary category, and also in the player detail view.  Holding the mouse over an award icon brings up a box detailing what the award is for.  Here is the list of awards a player may earn:
+<p>
+    <table width="400">
+    <tr>
+      <td width="20"><img src='./gifs/ratioaward.gif' border=0>
+      <td width="380">highest kill to death ratio
+    </tr>
+    <tr>
+      <td width="20"><img src='./gifs/killminaward.gif' border=0>
+      <td width="380">lowest kill to death ratio (yellow puddle of shame)
+    </tr>
+    <tr>
+      <td width="20"><img src='./gifs/safetyaward.gif' border=0>
+      <td width="380">lowest death rate
+    </tr>
+    <tr>
+      <td width="20"><img src='./gifs/deathaward.gif' border=0>
+      <td width="380">highest death rate
+    </tr>
+    <tr>
+      <td width="20"><img src='./gifs/killaward.gif' border=0>
+      <td width="380">highest total kills
+    </tr>
+    <tr>
+      <td width="20"><img src='./gifs/rateaward.gif' border=0>
+      <td width="380">highest kill rate
+    </tr>
+    <tr>
+      <td width="20"><img src='./gifs/weapon1.gif' border=0>
+      <td width="380">best with most popular weapon (hover the mouse over the award to see the weapon name)
+    </tr>
+    <tr>
+      <td width="20"><img src='./gifs/weapon2.gif' border=0>
+      <td width="380">best with second most popular weapon (hover the mouse over the award to see the weapon name)
+    </tr>
+    <tr>
+      <td width="20"><img src='./gifs/weapon3.gif' border=0>
+      <td width="380">best with third most popular weapon (hover the mouse over the award to see the weapon name)
+    </tr>
+    <tr>
+      <td width="20"><img src='./gifs/weapon.gif' border=0>
+      <td width="380">best with weapon (hover the mouse over the award to see the weapon name)
+    </tr>
+    </table>
+  <p class=helpbody><a class=sort href='#top'>[TOP]</a>
+  </td>
+  </tr>
+  <tr>
+    <td class=helpmargin>F.A.Q.<a name='faq'></a></td>
+    <td class=helpbody>
+
+1. <em>My name is not listed in the main list of players, even though I have played several games. Why? </em>
+<p class=helpbody>
+The most likely reason is that you do not have enough kills to be ranked.  When the data is generated, the server administrator may choose to rank (and show details for) only the top 25, 50, 100 or whatever number of players, based on their total kills.  Admins limit the number of players included to keep the stat files to a manageable size, so they won't take forever to load in a browser.  This practice also eliminates "transient players" who may have dropped in on the server for a few minutes and then left.  If every player who ever played on the server was ranked, after just a few weeks the files would be huge.  To be ranked, you just have to play more and get your kills up.
+<p class=helpbody>
+Another reason could be that the game(s) you played are not in the time period currently being displayed.  For example, if the time period you are looking at is for this month only, and you haven't played on the server this month, your name will not appear at all. 
+<p class=helpbody>
+2. <em>I found my name in someone else's details frame but it's not a link like the others.  What gives?</em> 
+<p class=helpbody>
+Even though a player may not be ranked in the main Player frame, his or her name is likely to appear under another player's details.  This is because the player with details is ranked, and so all the people he killed or who killed him may show up under his details.  If any of those people are not ranked, there will be no details for them and the name will not be linked to a detail page.  See question #1 for more information about ranking. 
+<p class=helpbody>
+3. <em>I've only played a few games on this server, but I'm ranked with 250 kills. I know I haven't killed that many times.  What's going on? </em>
+<p class=helpbody>
+This most often happens with people named "Player", which is the default name Half-Life gives you.  The program has no way of distinguishing between 2 or more people with the exact same name, so everyone with the same name will be treated as one single player for stats purposes.  For this reason, if one of the ranked names is Player, it should basically be ignored, because it is very unlikely that the name really represents just one single person, and is actually the combined data from all the people named Player.  To solve this problem, make sure you are not using the name Player, and try to choose a unique name for yourself and stick with it.
+<p class=helpbody>
+4. <em>I need more help or I have a question not listed here.  What can I do? </em>
+<p class=helpbody>
+Send me an email at 
+<a class=sort href="mailto:betterdead@planethalflife.com">
+betterdead@planethalflife.com</a> and I will do my best to help you out. <a class=sort href='#top'>[TOP]</a>
+</td>
+
+
+  </tr>
+  
+</table>
+</center>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+A.sort
+	{
+		text-decoration: none; 
+		color: #FFCC33;
+	}
+	
+A.sort:hover 
+	{
+		color: red 
+	}
+	
+td
+	{
+		vertical-align: top;
+	}
+	
+table.detail
+	{
+		border-width: 1;
+		border-color: red;
+		border-style: solid;
+	}
+	
+body 
+	{
+		font-family: "verdana", sans-serif;   
+		font-size: 8pt; 
+		color: #CCCCCC;   
+		background-color: #000000;  
+	}
+	
+h1
+	{ 
+		font-family: "verdana", sans-serif;
+	}
+	 
+h2
+	{ 
+		font-family: "verdana", sans-serif;
+	}
+
+td
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+	}
+	 
+td.data
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+	}
+
+th.name
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 150;
+	}
+
+th.mapname
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 100;
+	}
+
+th.kills
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 50;
+	}
+
+th.score
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 50;
+	}
+
+th.ratio
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 50;
+	}
+
+th.rate
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 50;
+	}
+
+th.deaths
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 50;
+	}
+	
+th.suicides
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 50;
+	}
+
+th.wins
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 50;
+	}
+
+th.caps
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 50;
+	}
+
+th.skill
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 50;
+	}
+
+
+th.time
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 70;
+	}
+
+th.weapons
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 110;
+	}
+
+th.awards
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 8pt;
+		text-align: left;
+		color: #CCCCCC;   
+		width: 110;
+	}
+	
+td.helpmargin
+	{
+		font-size: 10pt;
+		text-align: left;
+		vertical-align: top;
+		font-style: italic;
+		font-weight: bold;
+		color: #CCCCCC;   
+		width: 150;
+	}
+
+
+td.helpbody
+	{
+		text-align: left;
+		width: 500;
+		padding-bottom: 20px;
+		color: #CCCCCC;   
+	}
+
+td.weapons
+	{
+		text-align: left;
+		width: 110;
+		color: #CCCCCC;   
+	}
+
+td.awards
+	{
+		text-align: left;
+		width: 110;
+		color: #CCCCCC;   
+	}
+
+p
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 10pt;
+		color: #CCCCCC;   
+	}
+	
+p.helpbody
+	{
+		font-size: 8pt;
+		text-align: left;
+		width: 500;
+		color: #CCCCCC;   
+	}
+
+
+p.detailtitle
+	{
+		font-family: "verdana", sans-serif;
+		font-size: 10pt;
+		font-weight: bold;
+		color: #CCCCCC;   
+	}
+

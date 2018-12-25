@@ -1,0 +1,448 @@
+<html>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<head>
+<LINK REL=StyleSheet HREF="style.css" TYPE="text/css" MEDIA=screen>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>PigStats Half-Life Statistics</title>
+</head>
+
+<script type="text/javascript" language="JavaScript">//<!--
+// establish configuration settings
+var pscfgminkill = 0
+var pscfgignoreplayerswithnodeaths = false
+var pscfgignoreplayer = ""
+var pscfigignoreunranked = false
+//--></script>
+
+<script type="text/javascript" language="JavaScript" src="pigcfig.js"></script>
+
+<script type="text/javascript" language="JavaScript" src="psovera.js"></script>
+
+<script type="text/javascript" language="JavaScript" src="psgame.js"></script>
+
+<script type="text/javascript" language="JavaScript">//<!--
+// establish a default weapon name translation table
+var wntt=new Array
+var wnttx
+for (wnttx=0;wnttx<wq;wnttx++) 
+{
+	wntt[w[wnttx][0]]=w[wnttx][0]
+}
+//--></script>
+<script type="text/javascript" language="JavaScript" src="pswntt.js"></script>
+
+
+<script type="text/javascript" language="JavaScript">//<!--
+// globals
+var gmode
+var gqty
+var gplayer
+var gweapon
+var gmap
+var sta
+var playerawards
+
+// precache some images
+image1=new Image
+image2=new Image
+image3=new Image
+image4=new Image
+image5=new Image
+image6=new Image
+image7=new Image
+image8=new Image
+image9=new Image
+image10=new Image
+image11=new Image
+image12=new Image
+image13=new Image
+image14=new Image
+image15=new Image
+image16=new Image
+image17=new Image
+image18=new Image
+image19=new Image
+image20=new Image
+image21=new Image
+image22=new Image
+
+
+
+function colorFromWeapon(weapon, pixels, debug)
+{
+	var bartext=""
+	var colname=""
+	var weaponx = wi[weapon]
+	var weapondetail=weapon
+	if ((weapon!="*") && (weaponx<9) && (w[weaponx][0]==weapon))
+	{
+		switch (weaponx)
+		{
+			case 0 : colname="r1";break;
+			case 1 : colname="dg1";break;
+			case 2 : colname="dr1";break;
+			case 3 : colname="b1";break;
+			case 4 : colname="g1";break;
+			case 5 : colname="p1";break;
+			case 6 : colname="y1";break;
+			case 7 : colname="dy1";break;
+			case 8 : colname="lb1";break;
+			default : break;
+		}
+	}
+	else
+	{
+		colname="db1"
+	}
+	if (weapon=="*") 
+	{
+		weapondetail="other"
+	}
+	else
+	{
+		weapondetail=wntt[weapondetail]
+	}
+	if (pixels>1)
+	{
+		bartext="<img src='gifs/"+colname+".gif' title='"+weapondetail+"' width=\
+  '"+(pixels-1)+"' height='10'>"		
+	}
+	bartext+="<img src='gifs/divider.gif' width='1' height='10'>"
+	return bartext
+}
+
+function colorForPlayer(playerindex)
+{
+	// get the total kills for this guy
+	var bartext=""
+	var k, wk, i, pixels, pixeltotal=0;
+	k = p[playerindex][2]
+	wk = p[playerindex][11] // weapon kills for player
+	if (wk>5) wk=5 // more than 5 always gets ugly
+	for (i=0;i<wk;i++)
+	{
+		pixels = Math.round(100*px[playerindex][3][i][0]/k)
+		pixeltotal+=pixels
+		bartext+=colorFromWeapon(px[playerindex][3][i][1],pixels,i)
+	}
+	if (pixeltotal < 100) bartext+=colorFromWeapon("*",100-pixeltotal)
+	return bartext
+}
+
+function makeAwardText(file,comment)
+{
+	return "<img src='gifs/"+file+".gif' title='"+comment+"'> "
+}
+
+function findPlayerAwards()
+{
+	var pa = new(Array)
+	var i
+	var lowestratename
+	var highestratename
+	var highestrate=0
+	var lowestrate=1000000
+	var ratetemp
+	var n
+
+	for (i=0;i<pq;i++)
+	{
+		// initialize an award list for each player
+		pa[p[pk[i]][0]]=""
+	}
+	// determine the statistic awards
+	// highest kills
+	for (n=0;n<pkq;n++)
+	{
+		if (playervalidated(pk[n])) 
+		{
+			break
+		}
+	}
+	if (pkq && (n<pkq)) pa[p[pk[n]][0]]+=makeAwardText("killaward","highest kills")
+	
+	// highest kill rate
+	for (n=0;n<prtq;n++)
+	{
+		if (playervalidated(prt[n])) 
+		{
+			break
+		}
+	}
+	if (prtq && (n<prtq)) pa[p[prt[n]][0]]+=makeAwardText("rateaward","highest kill rate")
+	
+	// highest kill ratio
+	for (n=0;n<prq;n++)
+	{
+		if (playervalidated(pr[n])) 
+		{
+			break
+		}
+	}
+	if (prq && (n<prq)) pa[p[pr[n]][0]]+=makeAwardText("ratioaward",
+  "highest kill to death ratio")
+
+	// tfc awards
+	if (aretfcstats)
+	{
+		// highest tfc score
+		for (n=0;n<ptsq;n++)
+		{
+			if (playervalidated(pts[n])) 
+			{
+				break
+			}
+		}
+		if (ptsq && (n<ptsq)) pa[p[pts[n]][0]]+=makeAwardText("tfcscoreaward",
+	  "highest TFC score")
+		
+		// highest caps
+		for (n=0;n<pcq;n++)
+		{
+			if (playervalidated(pc[n])) 
+			{
+				break
+			}
+		}
+		if (pcq && (n<pcq)) pa[p[pc[n]][0]]+=makeAwardText("capsaward",
+	  "highest caps")
+		
+		// highest skill
+		for (n=0;n<pskq;n++)
+		{
+			if (playervalidated(psk[n])) 
+			{
+				break
+			}
+		}
+		if (pskq && (n<pskq)) pa[p[psk[n]][0]]+=makeAwardText("skillaward",
+	  "highest skill rating")
+	}
+	// lowest death rate (compute on the fly)
+	for (i=0;i<pdq;i++)
+	{
+		if (p[pd[i]][7])
+		{
+			ratetemp=p[pd[i]][3]/p[pd[i]][7]
+			if ((ratetemp>highestrate) && playervalidated(pd[i]))
+			{
+				highestratename=p[pd[i]][0]
+				highestrate=ratetemp
+			}
+			if ((ratetemp<lowestrate) && playervalidated(pd[i]))
+			{
+				lowestratename=p[pd[i]][0]
+				lowestrate=ratetemp
+			}
+		}
+	}
+	if (pdq) pa[lowestratename]+=makeAwardText("safetyaward","lowest death rate")
+
+	// highest deaths
+	if (pdq) pa[highestratename]+=makeAwardText("deathaward","highest death rate")
+	
+	// lowest ratio
+	for (n=prq;n;n--)
+	{
+		if (playervalidated(pr[n-1])) 
+		{
+			break
+		}
+	}
+	if (prq && n) pa[p[pr[n-1]][0]]+=makeAwardText("killminaward",
+  "lowest kill to death ratio (yellow puddle of shame)")
+// weapon awards
+	for (i=0;i<wq && (wi[w[i][0]]==i);i++)
+	{
+		for (j=0;j<w[i][2];j++)
+		{
+			if (playervalidated(pi[wk[i][j][1]]))
+			{
+				switch (i)
+				{
+					case 0 : pa[wk[i][j][1]]+=makeAwardText("weapon1",
+					"best with most popular weapon: "+wntt[w[i][0]]);break;
+					case 1 : pa[wk[i][j][1]]+=makeAwardText("weapon2",
+					"best with second most popular weapon: "+wntt[w[i][0]]);break;
+					case 2 : pa[wk[i][j][1]]+=makeAwardText("weapon3",
+					"best with third most popular weapon: "+wntt[w[i][0]]);break;
+					default : pa[wk[i][j][1]]+=makeAwardText("weapon",
+					"best with weapon: "+wntt[w[i][0]]);break;
+				}
+				break;
+			}
+		}
+	}
+	return pa
+}
+
+
+function playervalidated(px)
+{
+	var i=0
+	var isvalid=true
+	if (typeof p[px] == "undefined") return false
+	while ((typeof pscfgignoreplayer[i] != "undefined") && isvalid)
+	{
+		if (pscfgignoreplayer[i]==p[px][0]) return false
+		i++
+	}
+	return (	!(pscfgminkill && (p[px][2] < pscfgminkill)) &&
+				!(pscfgignoreplayerswithnodeaths && !p[px][3]))
+}
+
+// sort functions
+function sortByKills()
+{
+  gmode=pk
+  gqty=pkq
+}
+
+function sortByRatio()
+{
+  gmode=pr
+  gqty=prq
+}
+
+function sortByRate()
+{
+  gmode=prt
+  gqty=prtq
+}
+
+function sortByDeaths()
+{
+  gmode=pd
+  gqty=pdq
+}
+
+function sortBySuicides()
+{
+  gmode=ps
+  gqty=psq
+}
+
+function sortByWins()
+{
+  gmode=pmw
+  gqty=pmwq
+}
+
+function sortBySkill()
+{
+  gmode=psk
+  gqty=pskq
+}
+function sortByTime()
+{
+  gmode=pt
+  gqty=ptq
+}
+function sortByScore()
+{
+  gmode=pts
+  gqty=ptsq
+}
+function sortByCaps()
+{
+  gmode=pc
+  gqty=pcq
+}
+
+var pigInitialized=false
+
+function initPig()
+{
+	if (!pigInitialized)
+	{
+		pigInitialized = true
+		if (typeof pts != "undefined") 
+		{
+		  gmode=pts
+		  gqty=ptsq
+		}
+		else
+		{
+		  gmode=pk
+		  gqty=pkq
+		}
+		gplayer=0
+		gweapon=0
+		gmap=0
+		gplayer=p[0]
+		
+		// precache some images
+		image1.src="gifs/deathaward.gif"
+		image2.src="gifs/divider.gif"
+		image3.src="gifs/killaward.gif"
+		image4.src="gifs/killminaward.gif"
+		image5.src="gifs/rateaward.gif"
+		image6.src="gifs/ratioaward.gif"
+		image7.src="gifs/safetyaward.gif"
+		image8.src="gifs/weapon.gif"
+		image9.src="gifs/weapon1.gif"
+		image10.src="gifs/weapon2.gif"
+		image11.src="gifs/weapon3.gif"
+		image12.src="gifs/b1.gif"
+		image13.src="gifs/r1.gif"
+		image14.src="gifs/g1.gif"
+		image15.src="gifs/dr1.gif"
+		image16.src="gifs/dg1.gif"
+		image17.src="gifs/db1.gif"
+		image18.src="gifs/dy1.gif"
+		image19.src="gifs/lb1.gif"
+		image20.src="gifs/p1.gif"
+		image21.src="gifs/y1.gif"
+		image22.src="gifs/smallpiglogo.gif"
+		
+		// build the summary table array
+		sta=new(Array)
+		
+		// inline execution follows
+		playerawards = findPlayerAwards()
+		for(j=0;j<pkq;j++)
+		{
+			tfc1=""
+			tfc2=""
+			i = pk[j]
+			if (aretfcstats)
+			{
+				tfc1="<td class=data>"+p[i][16]
+				tfc2="<td class=data>"+p[i][14]+"<td class=data>"+p[i][15]
+			}
+	   	ratioText = p[i][5]
+   		if (ratioText==-1) ratioText="<em>flawless!</em>"
+			sta[i]="<tr><td class=data><a class=sort name='#"+p[i][0]+"' href='detail.htm' target='summaryFrame' onclick='parent.gplayer="+i+"' title='view detail for "+p[i][0]+"'>"
+			+p[i][0]+tfc1+"<td class=data>"+p[i][2]+"<td class=data>"+ratioText+"<td class=data>"+p[i][6]+"<td class=data>"+p[i][3]+"<td class=data>"+p[i][4]+"<td class=data>"+p[i][13]+tfc2+"<td class=data>"+p[i][7]+"<td class=weapons>"+colorForPlayer(i)+"<td class=awards>"+playerawards[p[i][0]]
+		}
+	}
+}
+
+
+
+//-->
+</script>
+
+<frameset rows="60,*" border=0 >
+	<frame name="indexFrame"  src="psindex.htm" marginheight=0 >
+	<frame name="summaryFrame" src="summary.htm"  marginheight=0 >
+</frameset>
+
+</html>

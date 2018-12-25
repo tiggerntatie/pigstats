@@ -1,0 +1,83 @@
+<html>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<script type="text/javascript" language="JavaScript" src="http://www.planethalflife.com/pigstats/infolink/currpigver.js"></script>
+<head>
+<LINK REL=StyleSheet HREF="style.css" TYPE="text/css" MEDIA=screen>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<center>
+<table>
+  <tr>
+    <td style='font-weight: bold'>total bytes processed
+    <script type="text/javascript" language="JavaScript">//<!--
+      document.writeln("<td>"+parent.metabp)
+    //--></script>
+  <tr>
+    <td style='font-weight: bold'>total files processed
+    <script type="text/javascript" language="JavaScript">//<!--
+      document.writeln("<td>"+parent.metafp)
+    //--></script>
+  <tr>
+    <td style='font-weight: bold'>total processing time (seconds)
+    <script type="text/javascript" language="JavaScript">//<!--
+      document.writeln("<td>"+parent.metapds)
+    //--></script>
+  <tr>
+    <td style='font-weight: bold'>time and date processed
+    <script type="text/javascript" language="JavaScript">//<!--
+      document.writeln("<td>"+parent.metaptd)
+    //--></script>
+  <tr>
+    <td style='font-weight: bold'>total players processed
+    <script type="text/javascript" language="JavaScript">//<!--
+      document.writeln("<td>"+parent.metatpp)
+    //--></script>
+  <tr>
+    <td style='font-weight: bold'>operating system
+    <script type="text/javascript" language="JavaScript">//<!--
+      document.writeln("<td>"+parent.metaos)
+    //--></script>
+  <tr>
+    <td style='font-weight: bold'>PigStats version
+    <script type="text/javascript" language="JavaScript">//<!--
+  		if (typeof(metapsvlatest)!="undefined" && (metapsvlatest != parent.metapsv)) 
+  		{
+  		  document.writeln("<td>"+parent.metapsv+" (PigStats version "+metapsvlatest+" is now available for free download)")
+  		}
+  		else
+  		{
+        document.writeln("<td>"+parent.metapsv)
+  		}
+    //--></script>
+  <tr>
+    <td style='font-weight: bold'>PigStats arguments
+    <script type="text/javascript" language="JavaScript">//<!--
+      document.writeln("<td>"+parent.metapsa)
+    //--></script>
+</table>
+</center>
+<br>
+<p style='text-align:center'><a class='sort' href='http://www.planethalflife.com/pigstats' target='_top'>PigStats is available from www.planethalflife.com/pigstats</a></p>
+<script type="text/javascript" language="JavaScript">//<!--
+//--></script>
+
+</body>
+</html>

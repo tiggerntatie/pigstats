@@ -1,0 +1,50 @@
+<html>
+<!--
+PigStats: Half-Life log file analyzer and statistics generator.
+Copyright (C) 2000  Eric Dennison
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<head>
+<LINK REL=StyleSheet HREF="style.css" TYPE="text/css" MEDIA=screen>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<script type="text/javascript" language="JavaScript">//<!--
+parent.initPig()
+//--></script>
+<p class=detailtitle align='center'>Weapon detail for 
+  <script type="text/javascript" language="JavaScript">//<!--
+    document.writeln(parent.wntt[parent.w[parent.gweapon][0]])
+  //--></script>
+</p>
+<center><table>
+  <tr>
+    <th class=name>player name
+    <th class=kills>kills
+  <script type="text/javascript" language="JavaScript">//<!--
+    for(i=0;i<parent.w[parent.gweapon][2];i++)
+    {
+      isok = parent.playervalidated(parent.pi[parent.wk[parent.gweapon][i][1]])
+      if (!(parent.pscfigignoreunranked && !isok))
+      {
+        document.writeln("<tr><td class=data>"+(isok?("<a class=sort href='detail.htm' target='summaryFrame' onclick='parent.gplayer="+parent.pi[parent.wk[parent.gweapon][i][1]]+"' title='view detail for "+parent.wk[parent.gweapon][i][1]+"'>"):"")+parent.wk[parent.gweapon][i][1]+"</td><td class=data>"+parent.wk[parent.gweapon][i][0]+"</td>")
+      }
+    }
+  //--></script>
+</table></center>
+
+</body>
+</html>
