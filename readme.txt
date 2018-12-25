@@ -1,5 +1,5 @@
-PigStats 1.7  README file September 17, 2001
-Copyright (c) 2001 Eric Dennison
+PigStats 1.8  README file December 25, 2018
+Copyright (c) 2001-2018 Eric Dennison
 
 Disclaimer:
 
